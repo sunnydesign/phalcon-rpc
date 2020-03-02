@@ -40,7 +40,6 @@ try {
     $app->get(
         '/',
         function () use ($app) {
-            $app->assets->addCss('css/style.css');
             $app->view->render('index', 'index');
         }
     );
@@ -49,31 +48,32 @@ try {
     $app->post(
         '/',
         function () use ($app) {
-            $config = $app->getDI()->getConfig();
-            $uri = new Uri($config['usersUrl']);
+            if ($this->security->checkToken()) {
+                $config = $app->getDI()->getConfig();
+                $uri = new Uri($config['usersUrl']);
 
-            $payload = [
-                'login' => $app->request->getPost('login', 'string'),
-                'password' => $app->request->getPost('password', 'string'),
-            ];
+                $payload = [
+                    'login' => $app->request->getPost('login', 'string'),
+                    'password' => $app->request->getPost('password', 'string'),
+                ];
 
-            $client = Client::factory($uri, ['rpc_error' => true]);
-            $request = $client->request(1, 'users.auth', $payload);
+                $client = Client::factory($uri, ['rpc_error' => true]);
+                $request = $client->request(1, 'users.auth', $payload);
 
-            try {
-                $response = $client->send($request);
-                $result = json_decode($response->getRpcResult());
+                try {
+                    $response = $client->send($request);
+                    $result = json_decode($response->getRpcResult());
 
-                if('true' === $result->success) {
-                    $app->flash->success($result->message);
-                } else {
-                    $app->flash->error($result->message);
+                    if('true' === $result->success) {
+                        $app->flash->success($result->message);
+                    } else {
+                        $app->flash->error($result->message);
+                    }
+                } catch (RequestException $e) {
+                    die($e->getResponse()->getRpcErrorMessage());
                 }
-            } catch (RequestException $e) {
-                die($e->getResponse()->getRpcErrorMessage());
             }
 
-            $app->assets->addCss('css/style.css');
             $app->view->render('index', 'index');
         }
     );
