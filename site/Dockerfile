@@ -6,6 +6,10 @@ RUN apt-get install -y \
     apt-transport-https \
     lsb-release \
     ca-certificates \
+    build-essential \
+    nghttp2 \
+    libnghttp2-dev \
+    libssl-dev \
     wget \ 
     curl \
     net-tools \

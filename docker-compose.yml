@@ -6,7 +6,7 @@ services:
     container_name: phalcon-site
     restart: always
     ports:
-      - 8080:80
+      - 80:80
     #volumes:
     #  - ./site/fs/var/www/site/:/var/www/site/
     networks:
