@@ -1,0 +1,29 @@
+version: '3'
+services:
+  phalcon-site:
+    build: ./site
+    image: phalcon-site
+    container_name: phalcon-site
+    restart: always
+    ports:
+      - 8080:80
+    #volumes:
+    #  - ./site/fs/var/www/site/:/var/www/site/
+    networks:
+      phalcon_bridge:
+        aliases:
+          - phalcon-site
+  phalcon-users:
+    build: ./users
+    image: phalcon-users
+    container_name: phalcon-users
+    restart: always
+    #volumes:
+    #  - ./users/fs/var/www/users/:/var/www/users/
+    networks:
+      phalcon_bridge:
+        aliases:
+          - phalcon-users
+networks:
+  phalcon_bridge:
+    driver: bridge

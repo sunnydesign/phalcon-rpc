@@ -1,0 +1,39 @@
+<?php use Phalcon\Tag; ?>
+
+<div class="row">
+    <div class="page-header">
+        <h1>Авторизация</h1>
+    </div>
+</div>
+
+<div class="row">
+    <?php echo Tag::form("/"); ?>
+        <p>
+            <?php $this->flash->output() ?>
+        </p>
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    <label for="login">
+                        <svg class="bi bi-person-fill" width="2em" height="2em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5 16s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H5zm5-6a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </label>
+                    <?php echo Tag::textField("login") ?>
+                </p>
+                <p>
+                    <label for="password">
+                        <svg class="bi bi-lock-fill" width="2em" height="2em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="11" height="9" x="4.5" y="8" rx="2"></rect>
+                            <path fill-rule="evenodd" d="M6.5 5a3.5 3.5 0 117 0v3h-1V5a2.5 2.5 0 00-5 0v3h-1V5z" clip-rule="evenodd"></path>
+                        </svg>
+                    </label>
+                    <?php echo Tag::passwordField("password") ?>
+                </p>
+                <p class="text-center">
+                    <?php echo Tag::submitButton("Войти") ?>
+                </p>
+            </div>
+        </div>
+    <?php echo Tag::endForm(); ?>
+</div>

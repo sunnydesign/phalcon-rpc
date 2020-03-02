@@ -1,0 +1,28 @@
+server {
+    listen 80 default_server;
+    root /var/www/site/public;
+    gzip on;
+    index index.php index.html;
+    access_log /var/log/nginx/site-access.log;
+    error_log /var/log/nginx/site-error.log;
+
+	location = /favicon.ico {
+	    return 204;
+	    access_log off;
+	    log_not_found off;
+	}
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        include fastcgi_params;
+    }
+}
