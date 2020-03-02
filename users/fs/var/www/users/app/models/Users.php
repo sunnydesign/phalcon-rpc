@@ -34,18 +34,11 @@ class Users extends Model
      */
     public function authenticate(?string $password): bool
     {
-        return $this->password === $this->hashPassword($password);
-    }
-
-    /**
-     * Hash password sha256 algorithm with salt
-     *
-     * @param string|null $password
-     * @return string
-     */
-    public function hashPassword(?string $password): string
-    {
-        $config = $this->getDI()->getConfig();
-        return hash('sha256', $password . $config['salt']);
+        if($this->getDi()->getShared('security')->checkHash($password, $this->password)) {
+            return true;
+        } else {
+            $this->getDi()->getShared('security')->hash(rand());
+            return false;
+        }
     }
 }

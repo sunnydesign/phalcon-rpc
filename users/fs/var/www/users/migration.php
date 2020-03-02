@@ -91,7 +91,7 @@ if(!$connection->tableExists('users')) {
         [
             'id' => 1,
             'username' => 'admin',
-            'password' => 'f4696338d7b2c17dcd9439e72a6e893a2205c3604696e474070c39ee7b1b948f',
+            'password' => '$2y$12$emtyRzVvTzVCRXhHY05QTOuLv9.8bodZlnRe1u/yjwXz4H244EM3y',
         ]
     );
 }
